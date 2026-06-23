@@ -1,7 +1,7 @@
 NAME:=grep
 
 CXX:=c++
-CXXFLAGS:=-Wall -Wextra -Werror -std=c++11 -O3 -MMD -MP -g
+CXXFLAGS:=-Wall -Wextra -Werror -std=c++11 -O3 -MMD -MP
 
 SRCS:=grep.cpp
 OBJS:=$(SRCS:.cpp=.o)

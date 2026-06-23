@@ -1,9 +1,10 @@
 #include <regex>
 #include <iostream>
 #include <string>
-#include <cassert>
 
 #include "Logger.hpp"
+
+// TODO, change stringstream to stringview
 
 struct Args
 {
@@ -109,7 +110,7 @@ void flush(std::vector<std::string>& ring, int idx, int& count, const Args& o) {
 	int i = 0;
 	while (i++ < count) {
 		std::cout << ring[start] << "\n";
-		ring[start].clear();
+		ring[start].clear(); // TODO do I need this?
 		start = (start + 1) % o.bN;
 	}
 	count = 0;
@@ -172,8 +173,8 @@ int do_ops(const Args& o) {
 	int exitc = 1;
 	int dist = 0;
 	int afters = 0;
-	bool out_after = (o.opts & Args::After || o.opts & Args::Both) ? true : false;
-	bool out_before = (o.opts & Args::Before || o.opts & Args::Both) ? true : false;
+	const bool out_after = o.opts & (Args::After | Args::Both);
+	const bool out_before = o.opts & (Args::Before | Args::Both);
 
 	LOG(LOG_WARN, "A: " << o.aN << ", " << "B: " << o.bN << ", F: " << 1 *(o.opts & Args::Fixed));
 	for (std::string line; std::getline(std::cin, line);) {
@@ -207,7 +208,7 @@ int do_ops(const Args& o) {
 			continue;
 		}
 		exitc = 0;
-		assert(r.got_match && exitc == 0);
+
 		// got match, print it
 		if (out_after) afters = o.aN; //set/reset counter
 		if (out_before) {
