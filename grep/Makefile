@@ -1,12 +1,13 @@
 NAME:=grep
 
 CXX:=c++
-CXXFLAGS:=-Wall -Wextra -Werror -std=c++11 -O3 -MMD -MP
+CXXFLAGS:=-Wall -Wextra -Werror -std=c++11 -O3 -MMD -MP -g
 
 SRCS:=grep.cpp
 OBJS:=$(SRCS:.cpp=.o)
 TOBJS:=$(SRCS:.cpp=_test.o)
 DEPS:=$(OBJS:.o=.d)
+TDEPS:=$(TOBJS:.o=.d)
 
 $(NAME) : $(OBJS)
 	$(CXX) $(CXXFLAGS) $(OBJS) -o $@
@@ -23,6 +24,7 @@ test_bin: $(TOBJS)
 
 test: test_bin
 	@./tester.sh
+
 clean:
 	rm -f $(OBJS) $(TOBJS) $(DEPS) $(TDEPS)
 
